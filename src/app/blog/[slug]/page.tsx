@@ -1,7 +1,16 @@
 import Image from 'next/image';
 import styles from './singlePost.module.css';
 
-export default function SinglePostPage() {
+export default function SinglePostPage({
+  params
+}: {
+  params: {
+    slug: string
+  }
+}) {
+
+  console.log(params);
+
   return (
     <div className={styles.container}>
       <div className={styles.imgContainer}>
