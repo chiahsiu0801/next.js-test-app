@@ -1,5 +1,6 @@
 import PostCard from "@/components/postCard/postCard";
 import styles from "./blog.module.css";
+import { Date, Types } from "mongoose";
 
 import { getPosts } from "@/lib/data";
 
@@ -8,10 +9,13 @@ interface SearchParams {
 }
 
 export type PostType = {
-  userId: number;
-  id: number;
+  _id: Types.ObjectId;
+  userId: string;
   title: string;
-  body: string;
+  desc: string;
+  slug: string;
+  img?: string;
+  createdAt: Date;
 }
 
 // FETCH DATA WITH AN API
@@ -44,7 +48,7 @@ export default async function BlogPage({
   return (
     <div className={styles.container}>
       {posts.map((post: PostType) => (
-        <div className={styles.post} key={post.id}>
+        <div className={styles.post} key={post.slug}>
           <PostCard post={post} />
         </div>
       ))}

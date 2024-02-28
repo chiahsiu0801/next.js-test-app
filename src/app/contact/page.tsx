@@ -2,11 +2,17 @@
 
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import type { Metadata } from "next";
 
 import styles from "./contact.module.css";
 // import HydrationTest from "@/components/hydrationTest";
 
 // const HydrationTestNoSSR = dynamic(() => import("@/components/hydrationTest"), {ssr: false});
+
+export const metadata: Metadata = {
+  title: "Contact Page",
+  description: "Contact description",
+};
 
 export default function ContactPage() {
 
