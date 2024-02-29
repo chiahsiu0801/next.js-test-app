@@ -19,15 +19,15 @@ export type PostType = {
 }
 
 // FETCH DATA WITH AN API
-// const getData = async () => {
-//   const res = await fetch('https://jsonplaceholder.typicode.com/posts', {next:{revalidate: 3600}});
+const getData = async () => {
+  const res = await fetch('http://localhost:3000/api/blog', {next:{revalidate: 3600}});
 
-//   if(!res.ok) {
-//     throw new Error("Something went wrong");
-//   }
+  if(!res.ok) {
+    throw new Error("Something went wrong");
+  }
 
-//   return res.json();
-// }
+  return res.json();
+}
 
 export default async function BlogPage({
   params,
@@ -40,10 +40,10 @@ export default async function BlogPage({
 }) {
 
   // FETCH DATA WITH AN API
-  // const posts = await getData();
+  const posts = await getData();
 
   // FETCH DATA WITHOUT AN API
-  const posts = await getPosts();
+  // const posts = await getPosts();
 
   return (
     <div className={styles.container}>
