@@ -1,8 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { Post } from "./models";
+import { Post, User } from "./models";
 import { connectToDb } from "./utils";
+import { signIn, signOut } from "./auth";
 
 export const addPost = async (formData) => {
   // const title = formData.get("title");
@@ -41,5 +42,48 @@ export const deletePost = async (formData) => {
   } catch (err) {
     console.log('err');
     return { error: "Something went wrong!" };
+  }
+}
+
+export const handleGithubLogin = async () => {
+  "use server";
+
+  await signIn("github");
+}
+
+export const handleLogout = async () => {
+  "use server";
+
+  await signOut();
+}
+
+export const register = async (formData) => {
+  const { username, email, img, password, passwordRepeat } = Object.fromEntries(formData);
+
+  if(password !== passwordRepeat) {
+    return "Passwords do not match!";
+  }
+
+  try {
+    connectToDb();
+
+    const user = User.findOne({ username });
+
+    if(user) {
+      return "Username already exists";
+    }
+
+    const newUser = new User({
+      username,
+      email,
+      password,
+      img,
+    });
+
+    await newUser.save();
+    console.log('saved to db');
+  } catch (err) {
+    console.log(err);
+    return { errors: "Something went wrong!" };
   }
 }
